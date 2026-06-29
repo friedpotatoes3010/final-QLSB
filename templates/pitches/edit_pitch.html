@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sửa sân
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    ✏️ Cập nhật sân
+</h2>
+
+<form method="POST"
+      enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button class="btn btn-primary">
+        Lưu
+    </button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Quản lý người dùng
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h2>👥 Quản lý người dùng</h2>
+
+    <a href="{% url 'admin_dashboard' %}"
+       class="btn btn-secondary">
+        Quay lại Dashboard
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tài khoản</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for u in users %}
+                    <tr>
+
+                        <td>{{ u.id }}</td>
+
+                        <td>
+                            {{ u.username }}
+
+                            {% if u.is_superuser %}
+                                <span class="badge bg-danger">
+                                    ADMIN
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ u.email }}</td>
+
+                        <td>
+                            {% if u.is_superuser %}
+                                Quản trị viên
+                            {% elif u.profile.role == 'owner' %}
+                                Chủ sân
+                            {% else %}
+                                Khách hàng
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ u.date_joined|date:"d/m/Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if not u.is_superuser %}
+
+                            <form method="POST"
+                                  action="{% url 'delete_user' u.id %}">
+
+                                {% csrf_token %}
+
+                                <button class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Xóa tài khoản này?')">
+
+                                    Xóa
+
+                                </button>
+
+                            </form>
+
+                            {% else %}
+                                <span class="text-muted">
+                                    Không khả dụng
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+                        <td colspan="6"
+                            class="text-center">
+
+                            Không có người dùng nào.
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

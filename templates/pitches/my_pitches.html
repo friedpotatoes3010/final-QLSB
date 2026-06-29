@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sân của tôi
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    ⚽ Sân của tôi
+</h2>
+
+<a href="{% url 'create_pitch' %}"
+   class="btn btn-success mb-3">
+    ➕ Đăng sân mới
+</a>
+
+<div class="row">
+
+{% for pitch in pitches %}
+
+<div class="col-md-4 mb-4">
+
+    <div class="card shadow">
+
+        {% if pitch.image %}
+        <img src="{{ pitch.image.url }}"
+             class="card-img-top">
+        {% endif %}
+
+        <div class="card-body">
+
+            <h5>{{ pitch.name }}</h5>
+
+            <p>{{ pitch.address }}</p>
+
+            <p class="text-danger">
+                {{ pitch.price_per_hour }} VNĐ/h
+            </p>
+
+            <a href="{% url 'edit_pitch' pitch.id %}"
+               class="btn btn-warning">
+                Sửa
+            </a>
+
+            <form
+                method="POST"
+                action="{% url 'delete_pitch' pitch.id %}"
+                style="display:inline;">
+
+                {% csrf_token %}
+
+                <button
+                    class="btn btn-danger"
+                    onclick="return confirm('Xóa sân này?')">
+
+                    Xóa
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<p>Bạn chưa đăng sân nào.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

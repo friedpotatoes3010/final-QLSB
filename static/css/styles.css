@@ -1,0 +1,57 @@
+:root{
+	--brand: #198754;
+	--muted: #6c757d;
+	--card-radius: .75rem;
+	--card-shadow: 0 10px 30px rgba(17,24,39,0.06);
+}
+
+/* Global styles */
+body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background-color: #f7f9fb; }
+main.container { max-width: 1100px; }
+
+/* Navbar */
+.navbar-brand { letter-spacing: .5px; font-size: 1.1rem; }
+.navbar .nav-link.btn { padding-top: .35rem; padding-bottom: .35rem; }
+
+/* Cards */
+.card { border-radius: var(--card-radius); transition: transform .18s ease, box-shadow .18s ease; border: 0; }
+.card:hover { transform: translateY(-6px); box-shadow: var(--card-shadow); }
+.card .card-body .card-title { font-size: 1.05rem; }
+
+/* Pitch card image */
+.card-img-top { border-top-left-radius: var(--card-radius); border-top-right-radius: var(--card-radius); }
+
+/* Badges & price */
+.badge-type { background: linear-gradient(90deg,#0d6efd,#6610f2); color: #fff; font-weight: 600; }
+.price { color: #dc3545; font-weight: 700; font-size: 1.05rem; }
+
+/* Booking card */
+.booking-card .card-header { background: linear-gradient(90deg, rgba(25,135,84,1), rgba(34,197,94,1)); color: #fff; border-radius: .5rem .5rem 0 0; }
+.booking-card .card-body { padding: 1.25rem; }
+
+/* Forms */
+.form-control, .form-select { border-radius: .5rem; box-shadow: none; }
+.form-label { font-weight: 600; color: var(--muted); }
+
+/* Table */
+.table thead th { background-color: #343a40; color: #fff; }
+
+/* Sticky sidebar */
+.position-sticky { top: 20px; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+	.card:hover { transform: none; box-shadow: none; }
+	main.container { padding-left: 12px; padding-right: 12px; }
+}
+
+/* Small utilities */
+.muted-small { color: var(--muted); font-size: .9rem; }
+.btn-wide { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+/* improve selects inside booking form */
+.booking-form-row .form-select { height: calc(2.5rem + 2px); }
+
+/* Estimated price box */
+#estimated-price { font-weight: 700; }
+

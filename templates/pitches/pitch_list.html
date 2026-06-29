@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Danh sách Sân bóng{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold text-uppercase text-success">Danh sách sân bóng trống lịch</h2>
+            <p class="text-muted">Chọn sân bóng phù hợp để xem lịch trống và tiến hành đặt lịch</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for pitch in pitches %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    {% if pitch.image %}
+                        <img src="{{ pitch.image.url }}" class="card-img-top" alt="{{ pitch.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500" class="card-img-top" alt="Default Pitch" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark">{{ pitch.name }}</h5>
+                        <p class="card-text mb-1">
+                            <span class="badge badge-type">{{ pitch.get_pitch_type_display }}</span>
+                        </p>
+                        {% if pitch.address %}
+                            <p class="card-text small text-muted mb-2">📍 {{ pitch.address }}</p>
+                        {% endif %}
+                        <p class="card-text text-muted small mb-3">
+                            {{ pitch.description|truncatewords:20 }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">{{ pitch.price_per_hour|floatformat:0 }} VND/h</span>
+                            <a href="{% url 'pitch_detail' pitch.pk %}" class="btn btn-success btn-sm btn-wide">Xem lịch & Đặt</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center my-5">
+                <div class="alert alert-warning d-inline-block px-5">
+                    Hiện tại chưa có sân bóng nào được đăng tải trên hệ thống!
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

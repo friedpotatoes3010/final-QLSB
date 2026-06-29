@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ pitch.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 mb-4">
+            <div class="card shadow-sm border-0 p-3 mb-4">
+                {% if pitch.image %}
+                    <img src="{{ pitch.image.url }}" class="img-fluid rounded mb-3" alt="{{ pitch.name }}" style="max-height: 400px; object-fit: cover; width: 100%;">
+                {% endif %}
+                <h2 class="fw-bold text-success">{{ pitch.name }}</h2>
+                {% if pitch.address %}
+                    <p class="text-muted small mb-2"><strong>Địa chỉ:</strong> {{ pitch.address }}</p>
+                {% endif %}
+                <p class="text-muted">Loại sân: <strong>{{ pitch.get_pitch_type_display }}</strong> | Giá thuê: <strong class="price">{{ pitch.price_per_hour|floatformat:0 }} VND/Giờ</strong></p>
+                <hr>
+                <h5>Mô tả chi tiết:</h5>
+                <p class="text-secondary">{{ pitch.description }}</p>
+            </div>
+
+            <div class="card shadow-sm border-0 p-3">
+                <h5 class="fw-bold text-warning mb-3">⚠️ Khung giờ đã có người đặt (Đã duyệt)</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle small">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Ngày đá</th>
+                                <th>Giờ bắt đầu</th>
+                                <th>Giờ kết thúc</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for b in approved_bookings %}
+                                <tr>
+                                    <td>{{ b.booking_date|date:"d/m/Y" }}</td>
+                                    <td>{{ b.start_time|time:"H:i" }}</td>
+                                    <td>{{ b.end_time|time:"H:i" }}</td>
+                                    <td><span class="badge bg-danger">Hết chỗ</span></td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">Sân đang trống hoàn toàn lịch, bạn có thể thoải mái chọn giờ!</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow border-0 position-sticky" style="top: 20px;">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="card-title mb-0 fw-bold text-center">TIẾN HÀNH ĐẶT SÂN</h5>
+                </div>
+                <div class="card-body p-4" id="booking-widget" data-price="{{ pitch.price_per_hour|floatformat:2 }}">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.booking_date.label }}</label>
+                            {{ form.booking_date }}
+                            {% if form.booking_date.errors %}
+                                <div class="text-danger small mt-1">{{ form.booking_date.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row booking-form-row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label">{{ form.start_time.label }}</label>
+                                {{ form.start_time }}
+                                {% if form.start_time.errors %}
+                                    <div class="text-danger small mt-1">{{ form.start_time.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label">{{ form.end_time.label }}</label>
+                                {{ form.end_time }}
+                                {% if form.end_time.errors %}
+                                    <div class="text-danger small mt-1">{{ form.end_time.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div id="estimated-price" class="alert alert-secondary small mb-3">Ước tính: —</div>
+
+                        <div class="alert alert-info small mt-2">
+                            * Lưu ý: Giá cuối cùng sẽ được hệ thống tính toán khi đơn được gửi.
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2 fw-bold fs-5 mt-2">Gửi yêu cầu đặt sân</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

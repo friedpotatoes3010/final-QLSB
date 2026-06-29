@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Đăng sân mới
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        ⚽ Đăng sân cho thuê
+    </h2>
+
+    <form method="POST"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn btn-success">
+            Đăng sân
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

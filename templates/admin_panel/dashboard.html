@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">
+        📊 Bảng điều khiển Quản trị viên
+    </h2>
+
+    <a href="{% url 'pitch_list' %}" class="btn btn-outline-secondary">
+        ⬅ Quay về trang chủ
+    </a>
+</div>
+
+<!-- Thống kê tổng quan -->
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center h-100">
+            <div class="card-body">
+                <h1 class="text-primary">{{ total_users }}</h1>
+                <h5>Tổng người dùng</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center h-100">
+            <div class="card-body">
+                <h1 class="text-success">{{ total_owners }}</h1>
+                <h5>Chủ sân</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center h-100">
+            <div class="card-body">
+                <h1 class="text-info">{{ total_customers }}</h1>
+                <h5>Khách thuê</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center h-100">
+            <div class="card-body">
+                <h1 class="text-warning">{{ total_pitches }}</h1>
+                <h5>Sân bóng</h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Đơn đặt -->
+<div class="row mt-4">
+
+    <div class="col-md-12">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <h3>Tổng số đơn đặt</h3>
+                <h1 class="display-4 text-danger">
+                    {{ total_bookings }}
+                </h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Chức năng quản trị -->
+<div class="row mt-5 g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+            <div class="card-body text-center">
+                <h4>👥 Quản lý người dùng</h4>
+                <p class="text-muted">
+                    Xem, quản lý và xóa tài khoản người dùng.
+                </p>
+
+                <a href="{% url 'admin_users' %}"
+                   class="btn btn-primary w-100">
+                    Truy cập
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+            <div class="card-body text-center">
+                <h4>⚽ Quản lý sân bóng</h4>
+                <p class="text-muted">
+                    Quản lý toàn bộ sân bóng trên hệ thống.
+                </p>
+
+                <a href="{% url 'my_pitches' %}"
+                   class="btn btn-success w-100">
+                    Quản lý sân
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+            <div class="card-body text-center">
+                <h4>⚙ Django Admin</h4>
+                <p class="text-muted">
+                    Truy cập trang quản trị mặc định của Django.
+                </p>
+
+                <a href="{% url 'admin:index' %}"
+                   class="btn btn-dark w-100">
+                    Vào Django Admin
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
