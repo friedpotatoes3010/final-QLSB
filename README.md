@@ -41,4 +41,6 @@ python manage.py runserver
 ```
 
 tk mk admin: admin123 - 12345678 (đang để cả role owner)
-tk test (khách hàng): 123 - 123
+tk test (tên đăng nhập - mật khẩu):
+cho thuê: alex - 1234567890
+đi thuê: DucAnh - ducanh123
